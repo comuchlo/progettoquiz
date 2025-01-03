@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Dic 15, 2024 alle 21:04
+-- Creato il: Gen 03, 2025 alle 01:48
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -101,8 +101,18 @@ CREATE TABLE `risposta_test` (
   `risposte` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`risposte`)),
   `studente` varchar(255) NOT NULL,
   `id` int(11) NOT NULL,
-  `data_esecuzione` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `data_esecuzione` datetime NOT NULL DEFAULT current_timestamp(),
+  `valutazione` float DEFAULT NULL
+) ;
+
+--
+-- Dump dei dati per la tabella `risposta_test`
+--
+
+INSERT INTO `risposta_test` (`id_test`, `risposte`, `studente`, `id`, `data_esecuzione`, `valutazione`) VALUES
+(2, NULL, 'studente', 1, '2025-01-02 19:15:32', NULL),
+(2, NULL, 'studente', 2, '2025-01-02 19:22:05', NULL),
+(2, NULL, 'studente', 3, '2016-01-07 19:22:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -135,18 +145,19 @@ CREATE TABLE `test` (
   `id` int(11) NOT NULL,
   `docente` varchar(255) NOT NULL,
   `nome` varchar(64) NOT NULL,
-  `data` date DEFAULT current_timestamp()
+  `data` date DEFAULT current_timestamp(),
+  `max_punteggio` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `test`
 --
 
-INSERT INTO `test` (`domande`, `id`, `docente`, `nome`, `data`) VALUES
-('{\"domande\":[{\"hasOptions\":false,\"testo\":\"testo\"},{\"hasOptions\":false,\"testo\":\"testo2\"},{\"hasOptions\":true,\"testo\":\"testo3\",\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":true},{\"op2\":\"opzione2\",\"isCorrect\":true},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]}]}', 2, 'docente', 'test prova 1', '2024-12-15'),
-('{\"domande\":[{\"hasOptions\":false,\"testo\":\"testo\"},{\"hasOptions\":true,\"testo\":\"testo2\",\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":true},{\"op2\":\"opzione2\",\"isCorrect\":true},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]},{\"hasOptions\":true,\"testo\":\"testo3\",\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":false},{\"op2\":\"opzione2\",\"isCorrect\":true},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]},{\"hasOptions\":true,\"testo\":\"testo4\",\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":true},{\"op2\":\"opzione2\",\"isCorrect\":false},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]},{\"hasOptions\":false,\"testo\":\"testo5\"}]}', 3, 'docenteN4', 'test prova 2', '2024-12-15'),
-('{\"domande\":[{\"hasOptions\":false,\"testo\":\"testo\"},{\"hasOptions\":true,\"testo\":\"testo2\",\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":true},{\"op2\":\"opzione2\",\"isCorrect\":true},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]},{\"hasOptions\":true,\"testo\":\"testo3\",\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":false},{\"op2\":\"opzione2\",\"isCorrect\":true},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]},{\"hasOptions\":true,\"testo\":\"testo4\",\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":true},{\"op2\":\"opzione2\",\"isCorrect\":false},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]},{\"hasOptions\":false,\"testo\":\"testo5\"}]}', 4, 'docenteN1', 'test prova 2', '2024-12-15'),
-('{\"domande\":[{\"hasOptions\":false,\"testo\":\"testo\"},{\"hasOptions\":true,\"testo\":\"testo2\",\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":true},{\"op2\":\"opzione2\",\"isCorrect\":true},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]},{\"hasOptions\":true,\"testo\":\"testo3\",\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":false},{\"op2\":\"opzione2\",\"isCorrect\":true},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]},{\"hasOptions\":true,\"testo\":\"testo4\",\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":true},{\"op2\":\"opzione2\",\"isCorrect\":false},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]},{\"hasOptions\":false,\"testo\":\"testo5\"}]}', 5, 'docente', 'test prova 2', '2024-12-15');
+INSERT INTO `test` (`domande`, `id`, `docente`, `nome`, `data`, `max_punteggio`) VALUES
+('{\"domande\":[{\"hasOptions\":false,\"testo\":\"testo\",\"punteggio\":1},{\"hasOptions\":false,\"testo\":\"testo2\",\"punteggio\":1},{\"hasOptions\":true,\"testo\":\"testo3\",\"punteggio\":1,\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":true},{\"op2\":\"opzione2\",\"isCorrect\":true},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]}]}', 2, 'docente', 'test prova 1', '2024-12-15', NULL),
+('{\r\n  \"domande\": [\r\n    {\r\n      \"hasOptions\": false,\r\n      \"punteggio\": 5,\r\n      \"testo\": \"testo\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo2\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo3\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo4\"\r\n    },\r\n    {\r\n      \"hasOptions\": false,\r\n      \"punteggio\": 5,\r\n      \"testo\": \"testo5\"\r\n    }\r\n  ]\r\n}', 3, 'docenteN4', 'test prova 2', '2024-12-15', NULL),
+('{\"domande\":[{\"hasOptions\":false,\"punteggio\":5,\"testo\":\"testo\"},{\"hasOptions\":true,\"opzioni\":[{\"isCorrect\":true,\"txt\":\"opzione1\"},{\"isCorrect\":true,\"txt\":\"opzione2\"},{\"isCorrect\":false,\"txt\":\"opzione3\"},{\"isCorrect\":false,\"txt\":\"opzione4\"}],\"punteggio\":1,\"testo\":\"testo2\"},{\"hasOptions\":true,\"opzioni\":[{\"isCorrect\":false,\"txt\":\"opzione1\"},{\"isCorrect\":true,\"txt\":\"opzione2\"},{\"isCorrect\":false,\"txt\":\"opzione3\"},{\"isCorrect\":false,\"txt\":\"opzione4\"}],\"punteggio\":1,\"testo\":\"testo3\"},{\"hasOptions\":true,\"opzioni\":[{\"isCorrect\":true,\"txt\":\"opzione1\"},{\"isCorrect\":false,\"txt\":\"opzione2\"},{\"isCorrect\":false,\"txt\":\"opzione3\"},{\"isCorrect\":false,\"txt\":\"opzione4\"}],\"punteggio\":1,\"testo\":\"testo4\"},{\"hasOptions\":false,\"punteggio\":5,\"testo\":\"testo5\"}]}', 4, 'docenteN1', 'test prova 2', '2024-12-15', NULL),
+('{\r\n  \"domande\": [\r\n    {\r\n      \"hasOptions\": false,\r\n      \"punteggio\": 5,\r\n      \"testo\": \"testo\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo2\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo3\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo4\"\r\n    },\r\n    {\r\n      \"hasOptions\": false,\r\n      \"punteggio\": 5,\r\n      \"testo\": \"testo5\"\r\n    }\r\n  ]\r\n}', 5, 'docente', 'test prova 2', '2024-12-15', NULL);
 
 --
 -- Trigger `test`
@@ -232,7 +243,9 @@ ALTER TABLE `classe`
 -- Indici per le tabelle `risposta_test`
 --
 ALTER TABLE `risposta_test`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fkidtest` (`id_test`),
+  ADD KEY `fkloginutente` (`studente`);
 
 --
 -- Indici per le tabelle `ruolo`
@@ -293,6 +306,13 @@ ALTER TABLE `test`
 ALTER TABLE `associazioni_classi`
   ADD CONSTRAINT `associazioni_classi_ibfk_1` FOREIGN KEY (`classe_id`) REFERENCES `classe` (`id`),
   ADD CONSTRAINT `associazioni_classi_ibfk_2` FOREIGN KEY (`utente_login`) REFERENCES `utente` (`login`);
+
+--
+-- Limiti per la tabella `risposta_test`
+--
+ALTER TABLE `risposta_test`
+  ADD CONSTRAINT `fkidtest` FOREIGN KEY (`id_test`) REFERENCES `test` (`id`),
+  ADD CONSTRAINT `fkloginutente` FOREIGN KEY (`studente`) REFERENCES `utente` (`login`);
 
 --
 -- Limiti per la tabella `test`
