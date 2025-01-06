@@ -40,9 +40,10 @@ $domande= json_decode($result['domande']);
 <body>
 <?php require("./navbar.php"); ?>
     <div class="p-5" style="height: 100vh;" >
-        <form action="" method="post" >
+        <form id="formId" onSubmit="return formSubmit('formId');" action="elaborazione_test.php?id=<?= $id ?>" method="post" >
 
             <?php
+                $counter=0;
                 for($i=0;isset($domande->domande[$i]);$i++){
                     echo   '<div class="mb-3 p-3 border rounded">
                             <p class="text-end mb-0">Punti: '.$domande->domande[$i]->punteggio.'</p>
@@ -51,13 +52,15 @@ $domande= json_decode($result['domande']);
                             <div class="px-1">';
                     if($domande->domande[$i]->hasOptions){
                         for($j=0;isset($domande->domande[$i]->opzioni[$j]);$j++){
-                            echo '<input type="checkbox" class="form-check-input" id="domanda'.$i.$j.'" name="domande[][]" value="op'.$j.'"> <label class="form-label" for="domanda'.$i.$j.'">'.$domande->domande[$i]->opzioni[$j]->txt.'</label><br>';
+                            
+                            echo '<input type="checkbox" class="form-check-input" id="domanda'.$i.$j.'" name="domande['.$counter.'][]" value="op'.$j.'"> <label class="form-label" for="domanda'.$i.$j.'">'.$domande->domande[$i]->opzioni[$j]->txt.'</label><br>';
                             
                         }
                     }else{
                         echo '<textarea class="form-control" name="domande[]" id="domanda'.$i.'"></textarea>';
                     }
                     echo '</div></div>';
+                    $counter+=1;
                 }
 
             ?>
@@ -88,5 +91,30 @@ $domande= json_decode($result['domande']);
 
 
 <?php require("./include_bs_js.php"); ?>
+
+
+
+<script>
+
+function formSubmit(formId){
+
+var theForm = document.getElementById(formId); // get the form
+
+var cb = theForm.getElementsByTagName('input'); // get the inputs
+
+for(var i=0;i<cb.length;i++){ 
+    if(cb[i].type=='checkbox' && !cb[i].checked)  // if this is an unchecked checkbox
+    {
+       cb[i].value = 0; // set the value to "off"
+       cb[i].checked = true; // make sure it submits
+    }
+}
+
+return true;
+
+}
+
+</script>
+
 </body>
 </html>
