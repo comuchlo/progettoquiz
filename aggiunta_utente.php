@@ -58,11 +58,12 @@ if(!isset($_GET["type"])|| empty($_GET["type"])){
                 if($_GET["type"]=='s'){
                 require_once("./db_connection.php");
 
-                echo '<div class="mb-3"> <label for="classe" class="form-label">Classe</label> <select id="classe" name="classe" class="form-select" aria-label="Default select example"> ';
+                echo '<div class="mb-3"> <label for="classe" class="form-label">Classe</label> <select required id="classe" name="classe" class="form-select" aria-label="Default select example"> ';
                 
                 $sql= $conn->prepare("SELECT * FROM `classe` WHERE (AS_inizio=YEAR(CURRENT_DATE()) AND MONTH(CURRENT_DATE())>=7) OR (AS_inizio+1=YEAR(CURRENT_DATE()) AND MONTH(CURRENT_DATE())<7)");
                 $sql->execute();
                 $risp = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+                echo '<option disabled value="" selected>-</option>';
                 foreach ($risp as $row) {
                     echo '<option value="'.$row["id"].'">'.$row["sezione"].'</option>';
                 }
@@ -84,7 +85,7 @@ if(!isset($_GET["type"])|| empty($_GET["type"])){
                 <label for="cf" class="form-label">Codice Fiscale</label>
                 <input type="text" class="form-control" id="cf" name="cf">
             </div>
-            <input type="hidden" name="ruolo" value="<?=($_GET["type"]=='s')?("3"):("2")?>">
+            <input type="hidden" name="ruolo" value="<?=($_GET["type"]=='s')?("1"):("2")?>">
             <button type="submit" class="btn btn-primary" name="ag_ut">Aggiungi <?=($_GET["type"]=='s')?("studente"):("docente")?></button>
         </form>
     </div>
