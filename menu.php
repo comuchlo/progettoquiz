@@ -45,8 +45,8 @@
             <h1>Benvenuto</h1>
             <p>Gestione aggiuta utenti</p>
             <div class="button-container">
-                <a href="insert_doc.php" class="btn btn-primary btn-custom">Aggiungi Docente</a>
-                <a href="insert_studente.php" class="btn btn-secondary btn-custom">Aggiungi Studente</a>
+                <a href="aggiunta_utente.php?type=d" class="btn btn-primary btn-custom">Aggiungi Docente</a>
+                <a href="aggiunta_utente.php?type=s" class="btn btn-secondary btn-custom">Aggiungi Studente</a>
             </div>
         </div>
 
