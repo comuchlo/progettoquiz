@@ -37,7 +37,7 @@
                         <a class="nav-link active" aria-current="page" href="/progettoquiz">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="tests.php">I miei test</a>
+                        <a class="nav-link active" aria-current="page" href="my_tests.php">I miei test</a>
                     </li>
                 </ul>
                 </div>

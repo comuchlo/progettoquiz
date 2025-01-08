@@ -43,11 +43,19 @@
     <div class="container contenuto">
         <div class="hero-section">
             <h1>Benvenuto</h1>
-            <p>Gestione aggiuta utenti</p>
-            <div class="button-container">
-                <a href="aggiunta_utente.php?type=d" class="btn btn-primary btn-custom">Aggiungi Docente</a>
-                <a href="aggiunta_utente.php?type=s" class="btn btn-secondary btn-custom">Aggiungi Studente</a>
-            </div>
+
+            <?php
+                if($_SESSION['privilegi']==3){
+                    echo <<< AGG
+                        <p>Gestione aggiuta utenti</p>
+                        <div class="button-container">
+                            <a href="aggiunta_utente.php?type=d" class="btn btn-primary btn-custom">Aggiungi Docente</a>
+                            <a href="aggiunta_utente.php?type=s" class="btn btn-secondary btn-custom">Aggiungi Studente</a>
+                        </div>
+                    AGG;
+                }
+            ?>
+            
         </div>
 
         <div class="altro">
