@@ -46,6 +46,9 @@ $res_risp = $sql->get_result()->fetch_assoc();
                 <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
             </svg>
             <?=$result['nome'] ?>
+            <?php if ($res_risp): ?>
+                <a href="visualizza_test_completato.php?id=<?=$id?>" class="btn btn-info ms-3">Visualizza Risposte</a>
+            <?php endif; ?> 
         </h5>
         
         <?php //var_dump($res_risp); echo "<br>"; var_dump($result)?>

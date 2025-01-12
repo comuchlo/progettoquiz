@@ -36,7 +36,7 @@ ini_set('display_errors', 1);
     echo '<ul class="list-group">';
     foreach($result as $row) {
         echo '<li class="list-group-item">'
-            .'<h5><a class="link-primary-hover link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="my_test.php?id='.$row["id"].'">' . ($row['nome']) . '</a></h5>'
+            .'<h5><a class="link-primary-hover link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="doc_test_menu.php?id='.$row["id"].'">' . ($row['nome']) . '</a></h5>'
             .'<p class="fs-6 text-body-secondary">' . ($row['data']) . '</p>';    
         if (!is_null($row['max_punteggio']) && $row['max_punteggio'] !== '') {
             echo '<p class="fs-6 text-body-secondary"> Punteggio massimo: ' . ($row['max_punteggio']) . '</p>';
