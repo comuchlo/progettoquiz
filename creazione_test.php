@@ -7,7 +7,7 @@
     <?php require("./include_bs_css.php"); ?>
 </head>
 <body>
-<?php require("./navbar.php"); require_once("./db_connection.php"); ?>
+<?php require("./navbar.php"); require_once("./db_connection.php"); require("./check_user.php") ?>
 
 <div class="d-flex justify-content-center py-5 pt-5">
     <button  class="btn btn-secondary btn-sm">

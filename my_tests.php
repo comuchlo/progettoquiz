@@ -20,7 +20,7 @@ ini_set('display_errors', 1);
     </style>
 </head>
 <body>
-<?php require("./navbar.php"); require_once("./db_connection.php"); ?>
+<?php require("./navbar.php"); require_once("./db_connection.php"); require("check_user.php");?>
 
     <div class="d-flex justify-content-end pe-3">
         <a class="btn btn-primary my-3" href="creazione_test.php">Crea test</a>

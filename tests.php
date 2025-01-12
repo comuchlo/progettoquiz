@@ -7,7 +7,7 @@
     <?php require("./include_bs_css.php"); ?>
 </head>
 <body>
-    <?php require("./navbar.php"); require_once("./db_connection.php"); ?>
+    <?php require("./navbar.php"); require_once("./db_connection.php"); require("./check_user.php"); ?>
 
     <?php
     ini_set('display_errors', 1);

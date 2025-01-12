@@ -17,7 +17,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     echo "<h3>ID Test non valido!</h3>";
     exit;
 }
-
+require("./check_user.php");
 ?>
 
 <!DOCTYPE html>

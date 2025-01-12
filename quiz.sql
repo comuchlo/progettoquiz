@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Gen 03, 2025 alle 01:48
+-- Creato il: Gen 13, 2025 alle 00:45
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -29,6 +29,17 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `check_ruolo` (`l` VARCHAR(255)) RETU
     DECLARE retval INT;
     SELECT utente.ruolo INTO retval FROM utente WHERE utente.login = l;
     RETURN retval;
+END$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `check_visibilita_test_classi` (`test` INT, `classe` INT) RETURNS INT(11)  BEGIN
+    DECLARE v INT DEFAULT -1;
+  	SELECT COUNT(*) INTO v FROM visibilita_test_classi WHERE test=visibilita_test_classi.id_test AND visibilita_test_classi.id_classe = classe;
+    
+    IF v>0 THEN
+    	RETURN true;
+	ELSE
+    	RETURN false;
+    END IF;
 END$$
 
 CREATE DEFINER=`root`@`localhost` FUNCTION `check_visibilita_test_studenti` (`i` INT, `l` VARCHAR(255)) RETURNS TINYINT(1)  BEGIN
@@ -65,7 +76,8 @@ INSERT INTO `associazioni_classi` (`classe_id`, `utente_login`) VALUES
 (1, 'docenteN2'),
 (1, 'studente'),
 (4, 'docenteN3'),
-(4, 'studente2');
+(4, 'studente2'),
+(5, 'docente');
 
 -- --------------------------------------------------------
 
@@ -110,9 +122,9 @@ CREATE TABLE `risposta_test` (
 --
 
 INSERT INTO `risposta_test` (`id_test`, `risposte`, `studente`, `id`, `data_esecuzione`, `valutazione`) VALUES
-(2, NULL, 'studente', 1, '2025-01-02 19:15:32', NULL),
-(2, NULL, 'studente', 2, '2025-01-02 19:22:05', NULL),
-(2, NULL, 'studente', 3, '2016-01-07 19:22:50', NULL);
+(4, '{\"domande\":[\"elio\",[\"op2\",\"0\",\"o9\",\"0\"],[\"0\",\"0\",\"0\",\"0\"],[\"0\",\"0\",\"0\",\"0\"],\"sss\"]}', 'studente', 12, '2025-01-06 17:01:29', NULL),
+(5, '{\"domande\":[\"rfew\",[\"op0\",\"op1\",\"op2\",\"0\"],[\"0\",\"0\",\"0\",\"0\"],[\"0\",\"0\",\"0\",\"op3\"],\"\"]}', 'studente', 14, '2025-01-12 20:48:49', NULL),
+(2, '{\"domande\":[\"fwewdqw\",\"dqw\",[\"0\",\"0\",\"op2\",\"0\"]]}', 'studente', 15, '2025-01-13 00:01:55', NULL);
 
 -- --------------------------------------------------------
 
@@ -154,7 +166,7 @@ CREATE TABLE `test` (
 --
 
 INSERT INTO `test` (`domande`, `id`, `docente`, `nome`, `data`, `max_punteggio`) VALUES
-('{\"domande\":[{\"hasOptions\":false,\"testo\":\"testo\",\"punteggio\":1},{\"hasOptions\":false,\"testo\":\"testo2\",\"punteggio\":1},{\"hasOptions\":true,\"testo\":\"testo3\",\"punteggio\":1,\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":true},{\"op2\":\"opzione2\",\"isCorrect\":true},{\"op3\":\"opzione3\",\"isCorrect\":false},{\"op4\":\"opzione4\",\"isCorrect\":false}]}]}', 2, 'docente', 'test prova 1', '2024-12-15', NULL),
+('{\"domande\":[{\"hasOptions\":false,\"testo\":\"testo\",\"punteggio\":1},{\"hasOptions\":false,\"testo\":\"testo2\",\"punteggio\":1},{\"hasOptions\":true,\"testo\":\"testo3\",\"punteggio\":1,\"opzioni\":[{\"op1\":\"opzione1\",\"isCorrect\":true,\"txt\": \"opzione1\"},{\"op2\":\"opzione2\",\"isCorrect\":true,\"txt\": \"opzione1\"},{\"op3\":\"opzione3\",\"isCorrect\":false,\"txt\": \"opzione1\"},{\"op4\":\"opzione4\",\"isCorrect\":false,\"txt\": \"opzione1\"}]}]}', 2, 'docente', 'test prova 1', '2024-12-15', NULL),
 ('{\r\n  \"domande\": [\r\n    {\r\n      \"hasOptions\": false,\r\n      \"punteggio\": 5,\r\n      \"testo\": \"testo\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo2\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo3\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo4\"\r\n    },\r\n    {\r\n      \"hasOptions\": false,\r\n      \"punteggio\": 5,\r\n      \"testo\": \"testo5\"\r\n    }\r\n  ]\r\n}', 3, 'docenteN4', 'test prova 2', '2024-12-15', NULL),
 ('{\"domande\":[{\"hasOptions\":false,\"punteggio\":5,\"testo\":\"testo\"},{\"hasOptions\":true,\"opzioni\":[{\"isCorrect\":true,\"txt\":\"opzione1\"},{\"isCorrect\":true,\"txt\":\"opzione2\"},{\"isCorrect\":false,\"txt\":\"opzione3\"},{\"isCorrect\":false,\"txt\":\"opzione4\"}],\"punteggio\":1,\"testo\":\"testo2\"},{\"hasOptions\":true,\"opzioni\":[{\"isCorrect\":false,\"txt\":\"opzione1\"},{\"isCorrect\":true,\"txt\":\"opzione2\"},{\"isCorrect\":false,\"txt\":\"opzione3\"},{\"isCorrect\":false,\"txt\":\"opzione4\"}],\"punteggio\":1,\"testo\":\"testo3\"},{\"hasOptions\":true,\"opzioni\":[{\"isCorrect\":true,\"txt\":\"opzione1\"},{\"isCorrect\":false,\"txt\":\"opzione2\"},{\"isCorrect\":false,\"txt\":\"opzione3\"},{\"isCorrect\":false,\"txt\":\"opzione4\"}],\"punteggio\":1,\"testo\":\"testo4\"},{\"hasOptions\":false,\"punteggio\":5,\"testo\":\"testo5\"}]}', 4, 'docenteN1', 'test prova 2', '2024-12-15', NULL),
 ('{\r\n  \"domande\": [\r\n    {\r\n      \"hasOptions\": false,\r\n      \"punteggio\": 5,\r\n      \"testo\": \"testo\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo2\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo3\"\r\n    },\r\n    {\r\n      \"hasOptions\": true,\r\n      \"opzioni\": [\r\n        {\r\n          \"isCorrect\": true,\r\n          \"txt\": \"opzione1\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione2\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione3\"\r\n        },\r\n        {\r\n          \"isCorrect\": false,\r\n          \"txt\": \"opzione4\"\r\n        }\r\n      ],\r\n      \"punteggio\": 1,\r\n      \"testo\": \"testo4\"\r\n    },\r\n    {\r\n      \"hasOptions\": false,\r\n      \"punteggio\": 5,\r\n      \"testo\": \"testo5\"\r\n    }\r\n  ]\r\n}', 5, 'docente', 'test prova 2', '2024-12-15', NULL);

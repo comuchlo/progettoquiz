@@ -28,5 +28,4 @@ if(isset($_POST["ag_ut"])){
         header("location: aggiunta_utente.php?error=$conn->error");
         die();
     }
-    header("location: aggiunta_utente.php");
 }

@@ -38,7 +38,7 @@ $domande= json_decode($result['domande']);
     <?php require("./include_bs_css.php"); ?>
 </head>
 <body>
-<?php require("./navbar.php"); ?>
+<?php require("./navbar.php"); require("./check_user.php")?>
     <div class="p-5" style="height: 100vh;" >
         <form id="formId" onSubmit="return formSubmit('formId');" action="elaborazione_test.php?id=<?= $id ?>" method="post" >
 

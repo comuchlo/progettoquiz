@@ -38,7 +38,7 @@ if(!isset($_GET["type"])|| empty($_GET["type"])){
     </style>
 </head>
 <body>
-    <?php require("./navbar.php"); ?>
+    <?php require("./navbar.php"); require("./check_user.php") ?>
 
     <div class="container mt-5">
         <h1 class="text-center">Aggiungi <?=($_GET["type"]=='s')?("studente"):("docente")?></h1>

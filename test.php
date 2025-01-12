@@ -33,7 +33,8 @@ $res_risp = $sql->get_result()->fetch_assoc();
     <?php require("./include_bs_css.php"); ?>
 </head>
 <body>
-<?php require("./navbar.php"); ?>
+<?php require("./navbar.php"); 
+require("./check_user.php"); ?>
     <div class="p-5" style="height: 100vh;" >
         <h5 class="d-flex align-items-center gap-1 align-top">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">

@@ -38,7 +38,9 @@
     </style>
 </head>
 <body>
-    <?php require("./navbar.php"); ?>
+    <?php require("./navbar.php");
+    require("check_user.php"); 
+    ?>
 
     <div class="container contenuto">
         <div class="hero-section">
