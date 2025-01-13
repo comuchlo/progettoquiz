@@ -46,9 +46,14 @@
                         </a>';
                     }
                 }else{
-                    if($classe["chk"]==0){
-                        echo '<div class="dropdown-item"> 
+                    $sql = $conn->prepare('SELECT check_visibilita_test_classi(?, ?) AS chk; ');
+                    $sql->bind_param("ii",$_REQUEST['id'], $classe['id']);
+                    $sql->execute();
+                    $visibilita= $sql->get_result()->fetch_assoc();
+                    if($visibilita["chk"]==0){
+                        echo '<div class="dropdown-item d-flex align-items-center"> 
                                 test non assegnato alla classe
+                                <button class="btn btn-link" onclick=\'window.location.href="assegna_test_classe.php?id='.$_REQUEST['id'].'&classe='.$classe['id'].' " \'>assegna</button>
                             </div>';
                     }else{
                         echo '<div class="dropdown-item"> 
