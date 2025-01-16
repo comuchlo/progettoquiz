@@ -74,7 +74,7 @@ $stmt->close();
 
                 echo '<div class="mt-3">
                         <label for="punteggio' . $i . '" class="form-label">Assegna un punteggio:</label>
-                        <input type="number" class="form-control" name="punteggi[]" id="punteggio' . $i . '" min="0" max="' . $domande->domande[$i]->punteggio . '">
+                        <input required type="number" step="0.1" class="form-control" name="punteggi[]" id="punteggio' . $i . '" min="0" max="' . $domande->domande[$i]->punteggio . '">
                       </div>';
 
                 echo '</div>';
@@ -82,33 +82,20 @@ $stmt->close();
             }
         ?>
         </div>
+        <button type="submit" class="btn btn-outline-success row ms-3 mb-3" id="assegnaValutazione">Assegna valutazione</button>
+        <input type="hidden" name="id" value="<?=$_REQUEST['id']?>">
+        <input type="hidden" name="studente" value="<?=$_REQUEST['studente']?>">
+
     </form>
-    <?php
-        $_SESSION['idTest'] = $_GET['id'];
-        $_SESSION['studente'] = $_GET['studente'];
-    ?>
     <div class="btn-group ms-3" role="group" aria-label="navigation">
-        <a href="<?= ($_SESSION['privilegi'] == 2) ? ("doc_test_menu.php?id=" . $test_id) : ("test.php?id=" . $test_id) ?>" class="btn btn-outline-primary">
+        <a href="visualizza_test_completato.php?id=<?=$_REQUEST['id']; ?>&studente=<?=$_REQUEST['studente']; ?>" class="btn btn-outline-primary">
             Indietro
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5"/>
             </svg>
         </a>
-        <a href="<?= ($_SESSION['privilegi'] == 2) ? ("my_tests.php") : ("tests.php") ?>" class="btn btn-outline-primary">Torna ai tuoi test</a>
-        <a href="#" class="btn btn-outline-primary" id="assegnaValutazione">Assegna valutazione</a>
+        <a href="my_tests.php" class="btn btn-outline-primary">Torna ai tuoi test</a>
     </div>
     <?php require("./include_bs_js.php"); ?>
-    <script>
-        document.getElementById('assegnaValutazione').addEventListener('click', function (e) {
-            e.preventDefault();
-            const inputs = document.querySelectorAll('input[type="number"]');
-            const params = new URLSearchParams();
-            inputs.forEach((input, index) => {
-                params.append(`punteggio${index}`, input.value);
-            });
-            const url = `assegna_valutazione.php?${params.toString()}`;
-            window.location.href = url;
-        });
-    </script>
 </body>
 </html>

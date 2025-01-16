@@ -1,50 +1,47 @@
 <?php
 session_start(); 
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $conn = new mysqli("localhost", "root", "", "quiz");
-    if ($conn->connect_error) {
-        die("Connessione fallita: " . $conn->connect_error);
+if (isset($_REQUEST)) {
+    require_once("./db_connection.php");
+
+    $punti = 0;
+    foreach($_REQUEST['punteggi'] as $punteggi){
+        $punti += floatval($punteggi);
     }
 
-    $flag = true;
-    $i = 0;
-    $somma = 0;
-
-    while ($flag) {
-        if (isset($_GET["punteggio$i"])) {
-            $somma += floatval($_GET["punteggio$i"]);
-            $i++;
+    $id_test = intval($_REQUEST["id"]); 
+    $studente = $_SESSION['studente'];
+    $data_esecuzione = date('Y-m-d H:i:s'); 
+    $select_query = "SELECT MAX(max_punteggio) AS max_valutazione FROM test WHERE test.id = ".htmlspecialchars($id_test);
+    $max_valutazione = $conn->query($select_query)->fetch_assoc()['max_valutazione'] ?? NULL;
+    if ($max_valutazione!==NULL && is_numeric($max_valutazione)) {
+        echo "<p>Il punteggio massimo del test è: $max_valutazione</p>";
+        if($punti>$max_valutazione){
+            header("location: visualizza_test_completato.php?id=".$_REQUEST['id']."&studente=".$_REQUEST['studente']."&error=1");
+            echo "die";
+            die();
+        }else{
+            $update_query = "UPDATE risposta_test SET valutazione = ? WHERE id_test = ? AND studente = ?";
+            $stmt = $conn->prepare($update_query);
+            $stmt->bind_param("dis", $punti, $id_test, $studente);
+            if ($stmt->execute()) {
+                echo "<p>Punteggio aggiornato correttamente.</p>";
+            } else {
+                header("location: visualizza_test_completato.php?id=".$_REQUEST['id']."&studente=".$_REQUEST['studente']."&error=1");
+            }
+        }
+    }else{
+        $update_query = "UPDATE risposta_test SET valutazione = ? WHERE id_test = ? AND studente = ?";
+        $stmt = $conn->prepare($update_query);
+        $stmt->bind_param("dis", $punti, $id_test, $studente);
+        if ($stmt->execute()) {
+            echo "<p>Punteggio aggiornato correttamente.</p>";
         } else {
-            $flag = false;
+            header("location: visualizza_test_completato.php?id=".$_REQUEST['id']."&studente=".$_REQUEST['studente']."&error=1");
         }
     }
-    $id_test = $_SESSION['idTest']; 
-    $studente = $_SESSION['studente']; 
-    $data_esecuzione = date('Y-m-d H:i:s'); 
-    $select_query = "SELECT MAX(max_punteggio) AS max_valutazione FROM test";
-    $result = $conn->query($select_query);
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $max_valutazione = $row['max_valutazione'];
-        echo "<p>Il punteggio massimo del test è: $max_valutazione</p>";
-    }
-    $valutazione = $somma / $max_valutazione;
-    $valutazione = $valutazione*10;
-    $update_query = "UPDATE risposta_test SET valutazione = ? WHERE id_test = ? AND studente = ?";
-    $stmt = $conn->prepare($update_query);
-    $stmt->bind_param("dis", $valutazione, $id_test, $studente);
-
-    if ($stmt->execute()) {
-        echo "<p>Punteggio aggiornato correttamente.</p>";
-    } else {
-        echo "<p>Errore nell'aggiornamento del punteggio.</p>";
-    }
-    $stmt->close();
-    $conn->close();
 } else {
     echo "Nessun dato inviato.";
 }
-header("location: correggi_test.php");
-?>
+header("location: visualizza_test_completato.php?id=".$_REQUEST['id']."&studente=".$_REQUEST['studente']);

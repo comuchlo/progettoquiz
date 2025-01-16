@@ -103,5 +103,12 @@ $stmt->close();
         </div>
     </div>
     <?php require("./include_bs_js.php"); ?>
+    <?php 
+        if(isset($_GET["error"])){
+            echo "<script type='text/javascript'>
+                    setTimeout(function() { alert('errore nell\'inserimento della valutazione'); }, 50);
+                  </script>";
+        }
+    ?>
 </body>
 </html>
