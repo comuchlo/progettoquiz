@@ -25,8 +25,8 @@
             echo '<div class="justify-content-center row" style="height: 100vh;"> <div class="accordion fw-medium" style="max-width: 75rem" id="accordionPanelsStayOpenExample">';
             $c= 65;
             while($docente = $result->fetch_assoc()){
-                $sql = $conn->prepare('SELECT test.nome, test.data, test.id FROM test WHERE test.docente = ?');
-                    $sql->bind_param("s",$docente['login']);
+                $sql = $conn->prepare('SELECT test.nome, test.data, test.id FROM test WHERE test.docente = ? AND check_visibilita_test_studenti(test.id, ?)');
+                    $sql->bind_param("ss",$docente['login'], $_SESSION['username']);
                     $sql->execute();
                     $res2= $sql->get_result();
                     echo '<div class="accordion-item my-3 border-top-0">
