@@ -77,7 +77,7 @@ $stmt->close();
 
     ?>
     </div>
-    <div class="btn-group ms-3" role="group" aria-label="navigation">
+    <div class="btn-group ms-3 mb-5" role="group" aria-label="navigation">
         <a href="doc_test_menu.php?id=<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>.php" class="btn btn-outline-primary" >
             Indietro 
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">

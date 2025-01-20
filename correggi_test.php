@@ -87,7 +87,7 @@ $stmt->close();
         <input type="hidden" name="studente" value="<?=$_REQUEST['studente']?>">
 
     </form>
-    <div class="btn-group ms-3" role="group" aria-label="navigation">
+    <div class="btn-group ms-3 mb-5" role="group" aria-label="navigation">
         <a href="visualizza_test_completato.php?id=<?=$_REQUEST['id']; ?>&studente=<?=$_REQUEST['studente']; ?>" class="btn btn-outline-primary">
             Indietro
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
