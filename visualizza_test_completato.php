@@ -84,7 +84,7 @@ $stmt->close();
 
     ?>
     </div>
-        <div class="d-flex">
+        <div class="d-flex mb-5">
         <div class="btn-group ms-3" role="group" aria-label="navigation">
             <a href=<?=($_SESSION['privilegi']==2)?("doc_test_menu.php?id=". $test_id ) : ("test.php?id=". $test_id)?> class="btn btn-outline-primary" >
                 Indietro 
