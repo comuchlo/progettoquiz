@@ -10,7 +10,7 @@ if (isset($_REQUEST)) {
     }
 
     $id_test = intval($_REQUEST["id"]); 
-    $studente = $_SESSION['studente'];
+    $studente = $_REQUEST['studente'];
     $data_esecuzione = date('Y-m-d H:i:s'); 
     $select_query = "SELECT MAX(max_punteggio) AS max_valutazione FROM test WHERE test.id = ".htmlspecialchars($id_test);
     $max_valutazione = $conn->query($select_query)->fetch_assoc()['max_valutazione'] ?? NULL;
